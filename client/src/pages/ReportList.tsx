@@ -3,8 +3,10 @@ import type { ReportDefinition } from '../types';
 import api from '../services/api';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Database } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function ReportList() {
+  const { isAdmin } = useAuth();
   const [reports, setReports] = useState<ReportDefinition[]>([]);
 
   useEffect(() => {
@@ -17,7 +19,7 @@ export default function ReportList() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
          <h1 className="text-2xl font-bold text-gray-900">Mevcut Raporlar</h1>
-         <Link to="/define" className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">Yeni Oluştur</Link>
+         {isAdmin && <Link to="/define" className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">Yeni Oluştur</Link>}
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -37,7 +39,7 @@ export default function ReportList() {
         {reports.length === 0 && (
             <div className="col-span-full text-center py-12 bg-white rounded-lg border border-dashed border-gray-300">
                 <p className="text-gray-500">Henüz tanımlanmış rapor yok.</p>
-                <Link to="/define" className="mt-2 text-indigo-600 hover:underline">İlk rapor tanımınızı oluşturun</Link>
+                {isAdmin && <Link to="/define" className="mt-2 text-indigo-600 hover:underline">İlk rapor tanımınızı oluşturun</Link>}
             </div>
         )}
       </div>

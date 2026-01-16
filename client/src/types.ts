@@ -25,3 +25,16 @@ export interface ExecuteReportDto {
     sortColumn?: string;
     sortDirection?: 'ASC' | 'DESC';
 }
+
+export interface User {
+    username: string;
+    fullName: string;
+    roles: string[];
+}
+
+export interface AuthResponse {
+    token: string;
+    username: string;
+    fullName: string;
+    roles: string[];
+}
