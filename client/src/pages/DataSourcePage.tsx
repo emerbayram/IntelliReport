@@ -28,7 +28,7 @@ export default function DataSourcePage() {
       resetForm();
       fetchSources();
     } catch (err) {
-      alert('Failed to save data source');
+      alert('Veri kaynağı kaydedilemedi');
     }
   };
 
@@ -39,19 +39,19 @@ export default function DataSourcePage() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this data source?')) return;
+    if (!confirm('Bu veri kaynağını silmek istediğinizden emin misiniz?')) return;
     try {
       await api.delete(`/datasources/${id}`);
       fetchSources();
     } catch (err) {
-      alert('Failed to delete data source');
+      alert('Veri kaynağı silinemedi');
     }
   };
 
   const handleTestConnection = async () => {
       setTestResult(null);
       if(!formData.connectionString) {
-          setTestResult({success: false, message: 'Please enter a connection string'});
+          setTestResult({success: false, message: 'Lütfen bir bağlantı dizesi girin'});
           return;
       }
       
@@ -61,7 +61,7 @@ export default function DataSourcePage() {
       } catch (err: any) {
           setTestResult({ 
               success: false, 
-              message: err.response?.data?.message || 'Connection failed' 
+              message: err.response?.data?.message || 'Bağlantı başarısız' 
           });
       }
   };
@@ -74,34 +74,34 @@ export default function DataSourcePage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">Manage Data Sources</h1>
+      <h1 className="text-2xl font-bold text-gray-900">Veri Kaynaklarını Yönet</h1>
       
       {/* Form */}
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <h2 className="text-lg font-medium mb-4 flex items-center justify-between">
             <span className="flex items-center">
                 {editingId ? <Pencil className="w-5 h-5 mr-2 text-indigo-600"/> : <Plus className="w-5 h-5 mr-2 text-indigo-600"/>} 
-                {editingId ? 'Edit Connection' : 'Add New Connection'}
+                {editingId ? 'Bağlantıyı Düzenle' : 'Yeni Bağlantı Ekle'}
             </span>
             {editingId && (
                 <button onClick={resetForm} className="text-sm text-gray-500 hover:text-gray-700 flex items-center">
-                    <X className="w-4 h-4 mr-1"/> Cancel
+                    <X className="w-4 h-4 mr-1"/> İptal
                 </button>
             )}
         </h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 md:grid-cols-2 items-end">
             <div>
-                <label className="block text-sm font-medium text-gray-700">Name</label>
+                <label className="block text-sm font-medium text-gray-700">Ad</label>
                 <input 
                     type="text" required 
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border"
-                    placeholder="e.g. ERP Database"
+                    placeholder="örn. ERP Veritabanı"
                     value={formData.name}
                     onChange={e => setFormData({...formData, name: e.target.value})}
                 />
             </div>
             <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700">Connection String</label>
+                <label className="block text-sm font-medium text-gray-700">Bağlantı Dizesi</label>
                 <div className="flex space-x-2">
                     <input 
                         type="text" required 
@@ -110,7 +110,7 @@ export default function DataSourcePage() {
                         value={formData.connectionString}
                         onChange={e => setFormData({...formData, connectionString: e.target.value})}
                     />
-                    <button type="button" onClick={handleTestConnection} className="mt-1 px-3 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 border border-gray-300 flex items-center" title="Test Connection">
+                    <button type="button" onClick={handleTestConnection} className="mt-1 px-3 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 border border-gray-300 flex items-center" title="Bağlantıyı Test Et">
                         <Wifi className="w-4 h-4" />
                     </button>
                 </div>
@@ -122,7 +122,7 @@ export default function DataSourcePage() {
             </div>
             <div>
                 <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 w-full md:w-auto">
-                    {editingId ? 'Update Source' : 'Add Source'}
+                    {editingId ? 'Kaynağı Güncelle' : 'Kaynak Ekle'}
                 </button>
             </div>
         </form>
@@ -144,16 +144,16 @@ export default function DataSourcePage() {
                       </div>
                   </div>
                   <div className="flex justify-end space-x-2 border-t pt-3 mt-auto">
-                      <button onClick={() => handleEdit(s)} className="p-2 text-gray-400 hover:text-indigo-600 rounded-full hover:bg-indigo-50 transition-colors" title="Edit">
+                      <button onClick={() => handleEdit(s)} className="p-2 text-gray-400 hover:text-indigo-600 rounded-full hover:bg-indigo-50 transition-colors" title="Düzenle">
                           <Pencil className="w-4 h-4" />
                       </button>
-                      <button onClick={() => handleDelete(s.id)} className="p-2 text-gray-400 hover:text-red-600 rounded-full hover:bg-red-50 transition-colors" title="Delete">
+                      <button onClick={() => handleDelete(s.id)} className="p-2 text-gray-400 hover:text-red-600 rounded-full hover:bg-red-50 transition-colors" title="Sil">
                           <Trash2 className="w-4 h-4" />
                       </button>
                   </div>
               </div>
           ))}
-          {sources.length === 0 && <p className="text-gray-500 italic col-span-full text-center py-8">No data sources defined yet.</p>}
+          {sources.length === 0 && <p className="text-gray-500 italic col-span-full text-center py-8">Henüz veri kaynağı tanımlanmamış.</p>}
       </div>
     </div>
   );

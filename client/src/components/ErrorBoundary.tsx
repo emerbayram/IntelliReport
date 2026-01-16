@@ -26,7 +26,7 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="p-8 bg-red-50 text-red-900">
-          <h1 className="text-2xl font-bold mb-4">Something went wrong</h1>
+          <h1 className="text-2xl font-bold mb-4">Bir hata oluştu</h1>
           <pre className="bg-red-100 p-4 rounded overflow-auto">
             {this.state.error?.toString()}
           </pre>

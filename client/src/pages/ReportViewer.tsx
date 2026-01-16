@@ -135,15 +135,15 @@ export default function ReportViewer() {
       return (
           <div className="p-8 text-center">
               <div className="bg-red-50 text-red-700 p-4 rounded-md border border-red-200 inline-block">
-                  <h3 className="font-bold">Error</h3>
+                  <h3 className="font-bold">Hata</h3>
                   <p>{error}</p>
-                  <a href="/" className="text-indigo-600 hover:text-indigo-800 underline mt-2 inline-block">Go back to Dashboard</a>
+                  <a href="/" className="text-indigo-600 hover:text-indigo-800 underline mt-2 inline-block">Ana Sayfaya Dön</a>
               </div>
           </div>
       );
   }
 
-  if(!report) return <div className="p-8 text-center text-gray-500">Loading...</div>;
+  if(!report) return <div className="p-8 text-center text-gray-500">Yükleniyor...</div>;
 
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)]">
@@ -156,15 +156,15 @@ export default function ReportViewer() {
           <div className="flex items-center space-x-4">
              {data.length > 0 && (
                 <span className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
-                    Total Records: {data.length}
+                    Toplam Kayıt: {data.length}
                 </span>
              )}
             <div className="flex space-x-2">
             <button onClick={handleExecute} disabled={loading} className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50">
-                <Play className="w-4 h-4 mr-2" /> Run Report
+                <Play className="w-4 h-4 mr-2" /> Raporu Çalıştır
             </button>
             <button onClick={handleExport} className="flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-                <Download className="w-4 h-4 mr-2" /> Export Excel
+                <Download className="w-4 h-4 mr-2" /> Excel'e Aktar
             </button>
             </div>
           </div>
@@ -176,7 +176,7 @@ export default function ReportViewer() {
             {/* Columns */}
             <div className="mb-6">
                 <h3 className="flex items-center text-sm font-semibold text-gray-900 mb-3">
-                    <Settings className="w-4 h-4 mr-2" /> Columns
+                    <Settings className="w-4 h-4 mr-2" /> Kolonlar
                 </h3>
                 <div className="space-y-2 max-h-60 overflow-y-auto pl-1">
                     <label className="flex items-center space-x-2 text-sm text-gray-700 hover:bg-gray-50 p-1 rounded cursor-pointer">
@@ -184,7 +184,7 @@ export default function ReportViewer() {
                             checked={selectedColumns.length === availableColumns.length} 
                             onChange={() => setSelectedColumns(selectedColumns.length === availableColumns.length ? [] : availableColumns)}
                             className="rounded text-indigo-600" />
-                        <span className="font-medium">Select All</span>
+                        <span className="font-medium">Tümünü Seç</span>
                     </label>
                     <div className="h-px bg-gray-100 my-1"></div>
                     {availableColumns.map(col => (
@@ -203,10 +203,10 @@ export default function ReportViewer() {
             <div>
                 <div className="flex justify-between items-center mb-3">
                     <h3 className="flex items-center text-sm font-semibold text-gray-900">
-                        <Filter className="w-4 h-4 mr-2" /> Filters
+                        <Filter className="w-4 h-4 mr-2" /> Filtreler
                     </h3>
                     <button onClick={addFilter} className="text-xs flex items-center text-indigo-600 hover:text-indigo-800">
-                        <Plus className="w-3 h-3 mr-1" /> Add
+                        <Plus className="w-3 h-3 mr-1" /> Ekle
                     </button>
                 </div>
                 <div className="space-y-3 mb-6">
@@ -229,30 +229,30 @@ export default function ReportViewer() {
                                     <option value="eq">=</option>
                                     <option value="gt">&gt;</option>
                                     <option value="lt">&lt;</option>
-                                    <option value="contains">Contains</option>
+                                    <option value="contains">İçerir</option>
                                 </select>
                                 <input 
                                     type="text" 
                                     className="block w-2/3 text-xs border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
-                                    placeholder="Value"
+                                    placeholder="Değer"
                                     value={f.value}
                                     onChange={e => updateFilter(idx, 'value', e.target.value)}
                                 />
                             </div>
                         </div>
                     ))}
-                     {filters.length === 0 && <p className="text-xs text-gray-500 italic">No filters applied.</p>}
+                     {filters.length === 0 && <p className="text-xs text-gray-500 italic">Filtre uygulanmadı.</p>}
                 </div>
             </div>
 
             {/* Sorting */}
             <div className="mb-6">
                 <h3 className="flex items-center text-sm font-semibold text-gray-900 mb-3">
-                    <ArrowUpDown className="w-4 h-4 mr-2" /> Sorting
+                    <ArrowUpDown className="w-4 h-4 mr-2" /> Sıralama
                 </h3>
                 <div className="space-y-3">
                     <div className="bg-gray-50 p-3 rounded-md border border-gray-200">
-                        <label className="block text-xs font-medium text-gray-700 mb-1">Sort By</label>
+                        <label className="block text-xs font-medium text-gray-700 mb-1">Sırala</label>
                         <select 
                             className="block w-full text-xs border-gray-300 rounded mb-2 focus:ring-indigo-500 focus:border-indigo-500"
                             value={sortConfig?.key || ''}
@@ -261,19 +261,19 @@ export default function ReportViewer() {
                                 if(val) setSortConfig({ key: val, direction: sortConfig?.direction || 'ASC' });
                                 else setSortConfig(null);
                             }}>
-                            <option value="">-- None --</option>
+                            <option value="">-- Yok --</option>
                             {availableColumns.map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
                         
                         {sortConfig && (
                             <>
-                            <label className="block text-xs font-medium text-gray-700 mb-1">Direction</label>
+                            <label className="block text-xs font-medium text-gray-700 mb-1">Yön</label>
                             <select 
                                 className="block w-full text-xs border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
                                 value={sortConfig.direction}
                                 onChange={e => setSortConfig({ ...sortConfig, direction: e.target.value as 'ASC' | 'DESC' })}>
-                                <option value="ASC">Ascending (A-Z)</option>
-                                <option value="DESC">Descending (Z-A)</option>
+                                <option value="ASC">Artan (A-Z)</option>
+                                <option value="DESC">Azalan (Z-A)</option>
                             </select>
                             </>
                         )}
@@ -328,7 +328,7 @@ export default function ReportViewer() {
                    </div>
              ) : (
                 <div className="flex items-center justify-center h-full text-gray-400">
-                    {loading ? "Executing..." : "No data to display. Click 'Run Report' to fetch results."}
+                    {loading ? "Çalıştırılıyor..." : "Görüntülenecek veri yok. Sonuçları getirmek için 'Raporu Çalıştır' butonuna tıklayın."}
                 </div>
              )}
         </div>

@@ -16,8 +16,8 @@ export default function ReportList() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-         <h1 className="text-2xl font-bold text-gray-900">Available Reports</h1>
-         <Link to="/define" className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">Create New</Link>
+         <h1 className="text-2xl font-bold text-gray-900">Mevcut Raporlar</h1>
+         <Link to="/define" className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">Yeni Oluştur</Link>
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -36,8 +36,8 @@ export default function ReportList() {
         ))}
         {reports.length === 0 && (
             <div className="col-span-full text-center py-12 bg-white rounded-lg border border-dashed border-gray-300">
-                <p className="text-gray-500">No reports defined yet.</p>
-                <Link to="/define" className="mt-2 text-indigo-600 hover:underline">Create your first report definition</Link>
+                <p className="text-gray-500">Henüz tanımlanmış rapor yok.</p>
+                <Link to="/define" className="mt-2 text-indigo-600 hover:underline">İlk rapor tanımınızı oluşturun</Link>
             </div>
         )}
       </div>
