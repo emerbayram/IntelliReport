@@ -1,9 +1,10 @@
 import { Outlet, Link } from 'react-router-dom';
 import { FileText } from 'lucide-react';
+import versionInfo from '../version.json';
 
 export default function Layout() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <nav className="bg-white shadow-sm border-b border-gray-200">
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
@@ -20,9 +21,14 @@ export default function Layout() {
           </div>
         </div>
       </nav>
-      <main className="max-w-full mx-auto py-6 sm:px-6 lg:px-8">
+      <main className="flex-1 max-w-full mx-auto py-6 sm:px-6 lg:px-8">
         <Outlet />
       </main>
+      <footer className="bg-white border-t border-gray-200 py-3 px-4 text-center">
+        <p className="text-xs text-gray-400">
+          IntelliReport v{versionInfo.version} | © 2026
+        </p>
+      </footer>
     </div>
   );
 }
