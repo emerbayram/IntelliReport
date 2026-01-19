@@ -63,7 +63,8 @@ namespace ReportingApp.API.Controllers
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
             {
-                return BadRequest(result.Errors);
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return BadRequest(new { message = errors });
             }
 
             if (request.Roles != null && request.Roles.Any())
@@ -87,7 +88,11 @@ namespace ReportingApp.API.Controllers
             user.FullName = request.FullName;
             
             var result = await _userManager.UpdateAsync(user);
-            if (!result.Succeeded) return BadRequest(result.Errors);
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return BadRequest(new { message = errors });
+            }
 
             // Update Roles
             var currentRoles = await _userManager.GetRolesAsync(user);
@@ -102,7 +107,12 @@ namespace ReportingApp.API.Controllers
             if (!string.IsNullOrWhiteSpace(request.Password))
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                await _userManager.ResetPasswordAsync(user, token, request.Password);
+                var passResult = await _userManager.ResetPasswordAsync(user, token, request.Password);
+                if (!passResult.Succeeded)
+                {
+                    var errors = string.Join(", ", passResult.Errors.Select(e => e.Description));
+                    return BadRequest(new { message = "Bilgiler güncellendi ancak şifre değiştirilemedi: " + errors });
+                }
             }
 
             return Ok(new { message = "Kullanıcı güncellendi." });
