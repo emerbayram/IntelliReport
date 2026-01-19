@@ -38,3 +38,17 @@ export interface AuthResponse {
     fullName: string;
     roles: string[];
 }
+
+export interface UserListItem {
+    id: string;
+    username: string;
+    fullName: string;
+    roles: string[];
+}
+
+export interface CreateUserRequest {
+    username: string;
+    fullName: string;
+    password?: string;
+    roles: string[];
+}
