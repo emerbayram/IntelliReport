@@ -8,6 +8,7 @@ interface AuthContextType {
     logout: () => void;
     isAuthenticated: boolean;
     isAdmin: boolean;
+    isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,6 +16,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [token, setToken] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         try {
@@ -27,6 +29,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
         } catch (err) {
             // Silently fail or handle as needed
+        } finally {
+            setIsLoading(false);
         }
     }, []);
 
@@ -53,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const isAdmin = user?.roles.includes('Admin') || false;
 
     return (
-        <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated, isAdmin }}>
+        <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated, isAdmin, isLoading }}>
             {children}
         </AuthContext.Provider>
     );
