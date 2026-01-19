@@ -4,6 +4,12 @@ export interface DataSource {
     connectionString: string;
 }
 
+export interface ReportCategory {
+    id: number;
+    name: string;
+    description?: string;
+}
+
 export interface ReportDefinition {
     id: number;
     name: string;
@@ -11,6 +17,8 @@ export interface ReportDefinition {
     description?: string;
     config?: string;
     dataSourceId?: number;
+    categoryId?: number;
+    category?: ReportCategory;
 }
 
 export interface ReportFilter {

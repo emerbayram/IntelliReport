@@ -10,4 +10,16 @@ public class ReportDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<ReportDefinition> ReportDefinitions { get; set; }
     public DbSet<DataSource> DataSources { get; set; }
+    public DbSet<ReportCategory> ReportCategories { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        builder.Entity<ReportDefinition>()
+            .HasOne(r => r.Category)
+            .WithMany(c => c.Reports)
+            .HasForeignKey(r => r.CategoryId)
+            .OnDelete(DeleteBehavior.SetNull);
+    }
 }

@@ -10,4 +10,7 @@ public class ReportDefinition
     
     public int? DataSourceId { get; set; }
     public DataSource? DataSource { get; set; }
+
+    public int? CategoryId { get; set; }
+    public ReportCategory? Category { get; set; }
 }

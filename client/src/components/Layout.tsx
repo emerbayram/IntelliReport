@@ -27,6 +27,7 @@ export default function Layout() {
                     <>
                         <Link to="/define" className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md font-medium transition-colors">Yeni Rapor</Link>
                         <Link to="/datasources" className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md font-medium transition-colors">Veri Kaynakları</Link>
+                        <Link to="/categories" className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md font-medium transition-colors">Kategoriler</Link>
                         <Link to="/users" className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md font-medium transition-colors">Kullanıcı Yönetimi</Link>
                     </>
                 )}

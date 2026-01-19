@@ -22,9 +22,23 @@ public class ReportsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ReportDefinition>>> GetReports()
+    public async Task<ActionResult> GetReports()
     {
-        return await _context.ReportDefinitions.ToListAsync();
+        var reports = await _context.ReportDefinitions
+            .Include(r => r.Category)
+            .Select(r => new
+            {
+                r.Id,
+                r.Name,
+                r.ViewName,
+                r.Description,
+                r.Config,
+                r.DataSourceId,
+                r.CategoryId,
+                Category = r.Category != null ? new { r.Category.Id, r.Category.Name, r.Category.Description } : null
+            })
+            .ToListAsync();
+        return Ok(reports);
     }
 
     [HttpPost]
@@ -36,16 +50,32 @@ public class ReportsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ReportDefinition>> GetReport(int id)
+    public async Task<ActionResult> GetReport(int id)
     {
-        var report = await _context.ReportDefinitions.Include(r => r.DataSource).FirstOrDefaultAsync(r => r.Id == id);
+        var report = await _context.ReportDefinitions
+            .Include(r => r.DataSource)
+            .Include(r => r.Category)
+            .Where(r => r.Id == id)
+            .Select(r => new
+            {
+                r.Id,
+                r.Name,
+                r.ViewName,
+                r.Description,
+                r.Config,
+                r.DataSourceId,
+                DataSource = r.DataSource != null ? new { r.DataSource.Id, r.DataSource.Name, r.DataSource.ConnectionString } : null,
+                r.CategoryId,
+                Category = r.Category != null ? new { r.Category.Id, r.Category.Name, r.Category.Description } : null
+            })
+            .FirstOrDefaultAsync();
 
         if (report == null)
         {
             return NotFound();
         }
 
-        return report;
+        return Ok(report);
     }
 
     [HttpGet("{id}/columns")]

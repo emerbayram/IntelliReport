@@ -5,6 +5,7 @@ import ReportViewer from './pages/ReportViewer';
 import DataSourcePage from './pages/DataSourcePage';
 import LoginPage from './pages/LoginPage';
 import UserManagementPage from './pages/UserManagementPage';
+import ReportCategoryPage from './pages/ReportCategoryPage';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
@@ -26,6 +27,7 @@ function App() {
                       <Route path="define" element={<ReportDefinitionPage />} />
                       <Route path="datasources" element={<DataSourcePage />} />
                       <Route path="users" element={<UserManagementPage />} />
+                      <Route path="categories" element={<ReportCategoryPage />} />
                   </Route>
               </Route>
           </Route>
