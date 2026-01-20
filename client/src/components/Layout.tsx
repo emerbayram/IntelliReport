@@ -50,7 +50,7 @@ export default function Layout() {
           </div>
         </div>
       </nav>
-      <main className="flex-1 max-w-full mx-auto py-6 sm:px-6 lg:px-8">
+      <main className="flex-1 w-full max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <Outlet />
       </main>
       <footer className="bg-white border-t border-gray-200 py-3 px-4 text-center">
