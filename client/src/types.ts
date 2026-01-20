@@ -60,3 +60,22 @@ export interface CreateUserRequest {
     password?: string;
     roles: string[];
 }
+
+export interface UserPermission {
+    userId: string;
+    userName: string;
+    email: string;
+    fullName: string;
+}
+
+export interface RolePermission {
+    roleId: string;
+    roleName: string;
+}
+
+export interface CategoryPermission {
+    categoryId: number;
+    categoryName: string;
+    users: UserPermission[];
+    roles: RolePermission[];
+}

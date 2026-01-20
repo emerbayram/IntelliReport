@@ -46,7 +46,9 @@ builder.Services.AddAuthentication(options => {
     };
 });
 
+// Services
 builder.Services.AddScoped<IDynamicQueryService, DynamicQueryService>();
+builder.Services.AddScoped<ICategoryAuthorizationService, CategoryAuthorizationService>();
 
 builder.Services.AddCors(options =>
 {

@@ -15,5 +15,9 @@ namespace ReportingApp.API.Models
         public string Description { get; set; }
 
         public ICollection<ReportDefinition> Reports { get; set; } = new List<ReportDefinition>();
+        
+        public ICollection<UserCategoryPermission> UserPermissions { get; set; } = new List<UserCategoryPermission>();
+        
+        public ICollection<RoleCategoryPermission> RolePermissions { get; set; } = new List<RoleCategoryPermission>();
     }
 }

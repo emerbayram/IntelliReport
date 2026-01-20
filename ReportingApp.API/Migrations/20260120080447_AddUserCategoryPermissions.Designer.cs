@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReportingApp.API.Data;
 
@@ -11,9 +12,11 @@ using ReportingApp.API.Data;
 namespace ReportingApp.API.Migrations
 {
     [DbContext(typeof(ReportDbContext))]
-    partial class ReportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260120080447_AddUserCategoryPermissions")]
+    partial class AddUserCategoryPermissions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,21 +307,6 @@ namespace ReportingApp.API.Migrations
                     b.ToTable("ReportDefinitions");
                 });
 
-            modelBuilder.Entity("ReportingApp.API.Models.RoleCategoryPermission", b =>
-                {
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RoleId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("RoleCategoryPermissions");
-                });
-
             modelBuilder.Entity("ReportingApp.API.Models.UserCategoryPermission", b =>
                 {
                     b.Property<string>("UserId")
@@ -401,25 +389,6 @@ namespace ReportingApp.API.Migrations
                     b.Navigation("DataSource");
                 });
 
-            modelBuilder.Entity("ReportingApp.API.Models.RoleCategoryPermission", b =>
-                {
-                    b.HasOne("ReportingApp.API.Models.ReportCategory", "Category")
-                        .WithMany("RolePermissions")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("ReportingApp.API.Models.UserCategoryPermission", b =>
                 {
                     b.HasOne("ReportingApp.API.Models.ReportCategory", "Category")
@@ -447,8 +416,6 @@ namespace ReportingApp.API.Migrations
             modelBuilder.Entity("ReportingApp.API.Models.ReportCategory", b =>
                 {
                     b.Navigation("Reports");
-
-                    b.Navigation("RolePermissions");
 
                     b.Navigation("UserPermissions");
                 });
